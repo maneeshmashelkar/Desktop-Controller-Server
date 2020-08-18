@@ -31,8 +31,8 @@ public class Server extends Thread {
     JLabel msg;
     MouseKeyboard mouseKeyboard = new MouseKeyboard();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    int screenWidth = (int) screenSize.getWidth();
-    int screenHeight = (int) screenSize.getHeight();
+    int screenWidth = (int) screenSize.getWidth();//get screen width
+    int screenHeight = (int) screenSize.getHeight();//get screen height
     private final JButton startServer;
     private final JButton reset;
 
@@ -41,7 +41,7 @@ public class Server extends Thread {
         this.msg = msg;
         this.startServer = startServer;
         this.reset = reset;
-        start();
+        start();//start the thread
     }
 
     private void connectionClosed() {
@@ -67,21 +67,20 @@ public class Server extends Thread {
     public void run() {
         try {
 
-           
+            //listen fot the client
             DesktopController.serversocket =new ServerSocket(DesktopController.port);
             DesktopController.socket = DesktopController.serversocket.accept();
             status.setText("connected");
             status.paintImmediately(status.getVisibleRect());
             DesktopController.inputStream = DesktopController.socket.getInputStream();
             DesktopController.objectInputStream = new ObjectInputStream(DesktopController.inputStream);
+            
             String message;
             Poweroff poweroff =new Poweroff();          
-            System.out.println("before while");
             while (true) {
                 try {
-                    message = (String) DesktopController.objectInputStream.readObject();
+                    message = (String) DesktopController.objectInputStream.readObject();//get msg from client
                     System.out.println(message);
-                    System.out.println("inside while");
                     DesktopController.msg.setText("");
                     int keycode;
                     if (message != null) {
@@ -98,7 +97,6 @@ public class Server extends Thread {
                             case "MOUSE_WHEEL":
                                 int scrollAmount
                                         = (int) DesktopController.objectInputStream.readObject();
-                                System.out.println(scrollAmount);
                                 mouseKeyboard.mouseWheel(scrollAmount);
                                 Thread.sleep(25);
                                 System.out.println(scrollAmount);
@@ -107,11 +105,11 @@ public class Server extends Thread {
                             case "MOUSE_MOVE":
                                 int x = (int) DesktopController.objectInputStream.readObject();
                                 int y = (int) DesktopController.objectInputStream.readObject();
-                                Point point = MouseInfo.getPointerInfo().getLocation();
-                                int nowx = point.x;
-                                int nowy = point.y;
+                                Point point = MouseInfo.getPointerInfo().getLocation();//get mouse pointer current location
+                                int nowx = point.x;//get mouse X value
+                                int nowy = point.y;//get mouse Y value
                                 if (x <= screenWidth && x != 0 && y != 0 && y <= screenHeight) {
-                                    mouseKeyboard.mouseGlide(nowx, nowy, nowx + x, nowy + y, 3,6);
+                                    mouseKeyboard.mouseMove(nowx, nowy, nowx + x, nowy + y, 3,6);//mouseMove(init-X,init-Y,destination-X,destination-Y,sleeptime,no. of loop)
 //                                     Thread.sleep(500);, 14, 525
 //                                    System.out.println(x + "," + y);
 //                                    System.out.println((nowx + x) + "," + (nowy + y));
@@ -120,14 +118,13 @@ public class Server extends Thread {
                                 break;
                             case "KEY_PRESS":
                                 keycode = (int) DesktopController.objectInputStream.readObject();
-                                mouseKeyboard.keyPress(keycode);
+                                mouseKeyboard.keyPressMethod(keycode);
                                 break;
                             case "KEY_RELEASE":
                                 keycode = (int) DesktopController.objectInputStream.readObject();
-                                mouseKeyboard.keyRelease(keycode);
+                                mouseKeyboard.keyReleaseMethod(keycode);
                                 break;
                             case "TYPE_CHARACTER":
-
                                 char ch = ((String) DesktopController.objectInputStream.readObject()).charAt(0);
                                 mouseKeyboard.typeCharacter(ch);
                                 System.out.println(ch);

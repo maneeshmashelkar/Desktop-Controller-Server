@@ -33,10 +33,6 @@ public class DesktopController extends javax.swing.JFrame {
     public static ObjectInputStream objectInputStream = null;
     public static InputStream inputStream = null;
     public static JLabel msg;
-//    public static JLabel status;
-//    public static JLabel ipLabel;
-//    public static JLabel portLabel;
-//    public static JLabel statusLabel;
 
     /**
      * Creates new form DesktopController
@@ -46,11 +42,7 @@ public class DesktopController extends javax.swing.JFrame {
         this.msg=msgLabel;
         setConnectionDetail();
     }
-
-//    public static void setLabel(String text){
-//        status.setText("connected");
-//        status.paintImmediately(status.getVisibleRect());
-//    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -192,8 +184,6 @@ public class DesktopController extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startServerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerButtonActionPerformed
-//        Startserver startserver = new Startserver();
-//        startserver.connect(this.statusLabel, this.msgLabel, this.startServerButton, this.resetButton);
     startServerButton.setEnabled(false);
     new Server(this.statusLabel, this.msgLabel, this.startServerButton, this.resetButton);
 
@@ -225,7 +215,8 @@ public class DesktopController extends javax.swing.JFrame {
     public void setConnectionDetail() {
 
         try {
-            Object ipaddress = IpAndPort.getIpAndPort.getLocalAddress();
+            
+            Object ipaddress = IpAndPort.getIpAndPort.getLocalAddress();//get ip address of computer
             System.out.println(ipaddress);
             if (ipaddress == null) {
                 ipLabel.setText("IpAddress not available");
@@ -236,7 +227,7 @@ public class DesktopController extends javax.swing.JFrame {
             }
             portLabel.setText(String.valueOf(port));
             statusLabel.setText("Not Connected");
-            System.out.println("setconnection");
+            System.out.println("set connection detail");
 
         } catch (SocketException ex) {
             Logger.getLogger(DesktopController.class.getName()).log(Level.SEVERE, null, ex);

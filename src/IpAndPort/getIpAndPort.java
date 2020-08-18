@@ -24,6 +24,7 @@ public class getIpAndPort {
             Enumeration<InetAddress> addresses = iface.getInetAddresses();    
             while (addresses.hasMoreElements()) {
                 InetAddress addr = addresses.nextElement();
+                //check the ip address is IPV4
                 if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
                     return addr;
                 }
@@ -49,7 +50,7 @@ public class getIpAndPort {
         boolean portAvailable = true;
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);//try the port is working 
         } catch(Exception e) {
             portAvailable = false;
         } finally {

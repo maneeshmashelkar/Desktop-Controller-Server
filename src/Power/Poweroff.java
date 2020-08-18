@@ -15,7 +15,7 @@ public class Poweroff {
     String os;
     Runtime runtime;
     public Poweroff() {
-        os = System.getProperty("os.name");
+        os = System.getProperty("os.name");//get the OS name
         System.out.println(os);
         runtime = Runtime.getRuntime();
        
@@ -88,8 +88,4 @@ public class Poweroff {
         
     }
     
-//    public static void main(String args[]) {
-//        Poweroff poweroff = new Poweroff();
-//        poweroff.sleep();
-//    }
 }

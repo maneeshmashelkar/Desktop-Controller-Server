@@ -5,6 +5,7 @@
  */
 package MouseKeyboard;
 
+import DesktopController.DesktopController;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -51,21 +52,21 @@ public class MouseKeyboard {
         
     }
 
-    public void mouseGlide(int x1, int y1, int x2, int y2, int t, int n ) throws InterruptedException {
-        double dx = (x2 - x1)/(double) n;
-        double dy = (y2 - y1)/(double) n ;
+    public void mouseMove(int x1, int y1, int x2, int y2, int t, int n ) throws InterruptedException {
+        double dx = (x2 - x1)/(double) n;//minimize the X-value
+        double dy = (y2 - y1)/(double) n ;//minimize the Y-value
 //        double dt = t / ((double) n);
         for (int step = 1; step <= n; step++) {
             Thread.sleep((int)t);
             robot.mouseMove((int) (x1 + dx * step), (int) (y1 + dy * step));
 //    , int t, int n    t / ((double) n)   
-System.out.println("MOUSEMOVE:"+(int) (x1 + dx * step)+","+(int) (y1 + dy * step));
+//System.out.println("MOUSEMOVE:"+(int) (x1 + dx * step)+","+(int) (y1 + dy * step));
         }
     }
-    public void keyPress(int keyCode) {
+    public void keyPressMethod(int keyCode) {
         robot.keyPress(keyCode);
     }
-    public void keyRelease(int keyCode) {
+    public void keyReleaseMethod(int keyCode) {
         robot.keyRelease(keyCode);
     }
     public void doType(int... keyCodes) {
@@ -376,7 +377,8 @@ System.out.println("MOUSEMOVE:"+(int) (x1 + dx * step)+","+(int) (y1 + dy * step
                 doType(VK_BACK_SPACE);
                 break;
             default:
-            //throw new IllegalArgumentException("Cannot type character " + character);
+                DesktopController.msg.setText("Cannot type character " + "'" + character + "'");
+
         }
     }
 
