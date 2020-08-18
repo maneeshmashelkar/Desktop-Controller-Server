@@ -5,20 +5,16 @@
  */
 package DesktopController;
 
-import com.sun.org.apache.xml.internal.serializer.utils.MsgKey;
-import java.awt.EventQueue;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sound.sampled.Port;
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 /**
@@ -39,10 +35,15 @@ public class DesktopController extends javax.swing.JFrame {
      */
     public DesktopController() {
         initComponents();
-        this.msg=msgLabel;
+        try {
+            setIconImage(ImageIO.read(new File("src/Image/Desktop Controller.png")));
+        } catch (IOException ex) {
+            Logger.getLogger(DesktopController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.msg = msgLabel;
         setConnectionDetail();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,6 +65,8 @@ public class DesktopController extends javax.swing.JFrame {
         msgLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Desktop Controller Server");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -184,8 +187,8 @@ public class DesktopController extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startServerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerButtonActionPerformed
-    startServerButton.setEnabled(false);
-    new Server(this.statusLabel, this.msgLabel, this.startServerButton, this.resetButton);
+        startServerButton.setEnabled(false);
+        new Server(this.statusLabel, this.msgLabel, this.startServerButton, this.resetButton);
 
     }//GEN-LAST:event_startServerButtonActionPerformed
 
@@ -215,13 +218,13 @@ public class DesktopController extends javax.swing.JFrame {
     public void setConnectionDetail() {
 
         try {
-            
+
             Object ipaddress = IpAndPort.getIpAndPort.getLocalAddress();//get ip address of computer
             System.out.println(ipaddress);
             if (ipaddress == null) {
                 ipLabel.setText("IpAddress not available");
                 msgLabel.setText("connect both devices to a local network.");
-               
+
             } else {
                 ipLabel.setText(ipaddress.toString());
             }

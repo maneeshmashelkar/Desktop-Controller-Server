@@ -1,22 +1,14 @@
 package DesktopController;
 
-import DesktopController.DesktopController.*;
 import static DesktopController.DesktopController.*;
 import MouseKeyboard.MouseKeyboard;
 import java.awt.Dimension;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Power.Poweroff;
 
@@ -26,7 +18,6 @@ import Power.Poweroff;
  */
 public class Server extends Thread {
 
-    
     JLabel status;
     JLabel msg;
     MouseKeyboard mouseKeyboard = new MouseKeyboard();
@@ -68,15 +59,15 @@ public class Server extends Thread {
         try {
 
             //listen fot the client
-            DesktopController.serversocket =new ServerSocket(DesktopController.port);
+            DesktopController.serversocket = new ServerSocket(DesktopController.port);
             DesktopController.socket = DesktopController.serversocket.accept();
             status.setText("connected");
             status.paintImmediately(status.getVisibleRect());
             DesktopController.inputStream = DesktopController.socket.getInputStream();
             DesktopController.objectInputStream = new ObjectInputStream(DesktopController.inputStream);
-            
+
             String message;
-            Poweroff poweroff =new Poweroff();          
+            Poweroff poweroff = new Poweroff();
             while (true) {
                 try {
                     message = (String) DesktopController.objectInputStream.readObject();//get msg from client
@@ -109,7 +100,7 @@ public class Server extends Thread {
                                 int nowx = point.x;//get mouse X value
                                 int nowy = point.y;//get mouse Y value
                                 if (x <= screenWidth && x != 0 && y != 0 && y <= screenHeight) {
-                                    mouseKeyboard.mouseMove(nowx, nowy, nowx + x, nowy + y, 3,6);//mouseMove(init-X,init-Y,destination-X,destination-Y,sleeptime,no. of loop)
+                                    mouseKeyboard.mouseMove(nowx, nowy, nowx + x, nowy + y, 3, 6);//mouseMove(init-X,init-Y,destination-X,destination-Y,sleeptime,no. of loop)
 //                                     Thread.sleep(500);, 14, 525
 //                                    System.out.println(x + "," + y);
 //                                    System.out.println((nowx + x) + "," + (nowy + y));
@@ -150,7 +141,7 @@ public class Server extends Thread {
                                 break;
                             case "PRESENTATION_MIN_KEY":
                                 mouseKeyboard.pressPresentationMinKey();
-                                break; 
+                                break;
                             case "SHUTDOWN":
                                 poweroff.shutdown();
                                 break;
@@ -181,7 +172,7 @@ public class Server extends Thread {
                 }
             }
         } catch (Exception ex) {
-             ex.printStackTrace();
+            ex.printStackTrace();
         }
     }
 }

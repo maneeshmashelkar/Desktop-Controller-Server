@@ -17,11 +17,12 @@ import java.util.Enumeration;
  * @author abc
  */
 public class getIpAndPort {
+
     public static InetAddress getLocalAddress() throws SocketException {
-        Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();       
+        Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
         while (ifaces.hasMoreElements()) {
             NetworkInterface iface = ifaces.nextElement();
-            Enumeration<InetAddress> addresses = iface.getInetAddresses();    
+            Enumeration<InetAddress> addresses = iface.getInetAddresses();
             while (addresses.hasMoreElements()) {
                 InetAddress addr = addresses.nextElement();
                 //check the ip address is IPV4
@@ -33,7 +34,7 @@ public class getIpAndPort {
 
         return null;
     }
-    
+
     public static int getFreePort() {
         int port = 3000;
         while (true) {
@@ -45,19 +46,19 @@ public class getIpAndPort {
         }
         return port;
     }
-    
+
     private static boolean isPortAvailable(int port) {
         boolean portAvailable = true;
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(port);//try the port is working 
-        } catch(Exception e) {
+        } catch (Exception e) {
             portAvailable = false;
         } finally {
             if (serverSocket != null) {
                 try {
                     serverSocket.close();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 };
             }
