@@ -36,7 +36,7 @@ public class DesktopController extends javax.swing.JFrame {
     public DesktopController() {
         initComponents();
         try {
-            setIconImage(ImageIO.read(new File("src/Image/Desktop Controller.png")));
+            setIconImage(ImageIO.read(new File("src/Image/Desktop Controller Server.png")));
         } catch (IOException ex) {
             Logger.getLogger(DesktopController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -66,7 +66,6 @@ public class DesktopController extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Desktop Controller Server");
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
