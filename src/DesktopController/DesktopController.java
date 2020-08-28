@@ -5,6 +5,7 @@
  */
 package DesktopController;
 
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,11 +36,7 @@ public class DesktopController extends javax.swing.JFrame {
      */
     public DesktopController() {
         initComponents();
-        try {
-            setIconImage(ImageIO.read(new File("src/Image/Desktop Controller Server.png")));
-        } catch (IOException ex) {
-            Logger.getLogger(DesktopController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Icon.png")));
         this.msg = msgLabel;
         setConnectionDetail();
     }
